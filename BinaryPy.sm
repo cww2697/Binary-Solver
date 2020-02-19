@@ -1,0 +1,53 @@
+% Answer set programming binary solver
+% Cody West
+%
+% Valid integers (0 and 1 are valid)
+%
+% Binary Sudoku solver: Binary Sudoku is a similar puzzle to sudoku. 
+% The rules are as follows
+% 1. Each row and column must have the same number of 1's and 0's
+% 2. Each row and column must be unique
+% 3. Each number may not appear in consecutive triples
+% 
+% The program works in conjuction with python 3.6, Clingo, and Mkatoms to create the required files and solve the user input puzzle.
+%
+% Required Files:
+% 	BinaryTemp.sm
+% 	BinaryOut.sm
+% 	BinaryPy.sm - This File
+%
+% Using the defined rules Clingo will attempt to find an answer set that will statisfy all conditions
+num(0..1).
+range(1..6).
+
+% There may only be one number in each X,Y position
+
+%1{pos(N,X,Y):num(N)}1:-range(X), range(Y).
+
+% Each row and column must have the same number of 1's and 0's
+
+3{pos(1,X,Y):range(Y)}3 :- range(X).
+
+3{pos(1,X,Y):range(X)}3 :- range(Y).
+
+%any position that is not filled by a 1 must be filled by a 0
+pos(0,X,Y) :- not pos(1,X,Y),range(X),range(Y).
+
+% Each row and column must be unique
+
+% Row check - check if 2 values in separate rows are different
+differentR(X1,X2) :- pos(N1,X1,Y), pos(N2,X2,Y), N1!=N2.
+:- not differentR(X1,X2),range(X1),range(X2),X1!=X2.
+
+% Column check
+differentC(Y1,Y2) :- pos(N1,X,Y1), pos(N2,X,Y2), N1!=N2.
+:-not differentC(Y1,Y2),range(Y1),range(Y2),Y1!=Y2.
+
+
+% Each number may not appear in consecutive triples
+
+:-pos(N,X,Y), pos(N,X+1,Y), pos(N,X+2,Y), num(N).
+:-pos(N,X,Y), pos(N,X,Y+1), pos(N,X,Y+2), num(N).
+
+#show pos/3.
+
