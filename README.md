@@ -18,10 +18,10 @@ Documentation:
 	This python program attempts to solve a 6*6 Binary Sudoku Puzzle.
 	The program uses tkinter for buiding the GUI and MKAtoms to make the GUI input into an atom
 	for use in clingo. Clingo then follows the rules:
-							1. Only 1 number may be stored in a cell
-							2. Each row and column must have the same number of 1's and 0's
-							3. Each row must be unique
-							4. No number can appear in consecutive triples
+		1. Only 1 number may be stored in a cell
+		2. Each row and column must have the same number of 1's and 0's
+		3. Each row must be unique
+		4. No number can appear in consecutive triples
 	Once the system call for clingo has finished the answer set will be translated into the GUI
 	for review by the user.
 	
